@@ -12,7 +12,15 @@ if (isset($_POST['c'])) {
   $c = sanitizeString($_POST['c']);
 }
 
-$out = "";
+if ($f != '') {
+  $c = intval((5 / 9) * ($f - 32));
+  $out = "$f °f equals $c °c";
+} elseif ($c != '') {
+  $f = intval((9 / 5) * $c + 32);
+  $out = "$c °c equals $f °f";
+} else {
+  $out = "";
+}
 
 echo <<<END
 <html>
@@ -32,3 +40,5 @@ echo <<<END
   </body>
 </html>
 END;
+
+var_dump($_SERVER);
