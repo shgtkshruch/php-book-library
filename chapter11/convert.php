@@ -1,4 +1,17 @@
 <?php
+
+require_once 'sanitize.php';
+
+$f = $c = "";
+
+if (isset($_POST['f'])) {
+  $f = sanitizeString($_POST['f']);
+}
+
+if (isset($_POST['c'])) {
+  $c = sanitizeString($_POST['c']);
+}
+
 $out = "";
 
 echo <<<END
