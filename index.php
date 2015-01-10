@@ -11,6 +11,15 @@ if (!$db_server) {
 mysql_select_db($db_database, $db_server)
   or die("Unable to select database: " . mysql_error());
 
+if (isset($_POST['delete']) && isset($_POST['isbn'])) {
+  $isbn = get_post('isbn');
+  $query = "DELETE FROM classics WHERE isbn = '$isbn'";
+  if (!mysql_query($query, $db_server)) {
+    echo "DELETE failed: $query<br/>" .
+      mysql_error() . "<br/><br/>";
+  }
+}
+
 if (isset($_POST['author']) &&
   isset($_POST['title']) &&
   isset($_POST['category']) &&
@@ -67,7 +76,14 @@ for ($i = 0; $i < $rows; $i++) {
   Title:    $row[1]
   Category: $row[2]
   Year:     $row[3]
-  ISDN:     $row[4]
+  ISBN:     $row[4]
 </pre>
+<form action="index.php" method="POST">
+  <input type="hidden" name="delete" value="yes">
+  <input type="hidden" name="isbn" value="$row[4]">
+  <input type="submit" value="Delete">
+</form>
 EOF;
 }
+
+mysql_close();
